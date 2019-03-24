@@ -18,70 +18,126 @@ namespace Arcanoid
         }
         Bitmap myBitmap;
         Graphics gr;
-        Game game;
-        
+        Platform platform;
+        Bullet bullet;
+
+        Settings GameSettings;
+        List<Block> blocks = new List<Block>();
 
         public Form2(Settings settings)
         {
             InitializeComponent();
-            game = new Game(settings);
             this.Width = settings.FormWidth;
             this.Height = settings.FormHeight;
+            GameSettings = settings;
             
-            pictureBox1.Width = this.Width;
-            pictureBox1.Height = this.Height;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int m = 0; m < GameSettings.GetBlocksRow(); m++)
+                {
+                    
+                    int index = i * GameSettings.GetBlocksRow() + m;
+                    int X = 3 + m * (GameSettings.GetBlockSize() + 3);
+                    int Y = 3 + i * (GameSettings.GetBlockSize() + 3);
+                    blocks.Add(new Block(X,Y, settings));
+                    
+                }
+            }
+            platform = new Platform(settings);
+            bullet = new Bullet(settings);
+            pictureBox1.Width = this.Width-10;
+            pictureBox1.Height = this.Height-30;
             myBitmap = new Bitmap(Width, Height);
             gr = Graphics.FromImage(myBitmap);
-            game.Win += WinGame;
-            game.Lose += LoseGame;
-        }
+            
 
-        private void LoseGame()
-        {
-            this.Dispose();
-            MessageBox.Show("Потрачено!");
+
         }
-        private void WinGame()
-        {
-            this.Dispose();
-            MessageBox.Show("ПОБЕДА");
-        }
+        bool GameStarted = false;
         
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space)
+            if ((e.KeyCode == Keys.Space)&&(GameStarted==false))
             {
                 timer.Enabled = true;
-                game.OnSpaceKey();
+                GameStarted = true;
+                bullet.Start();
             }
             if (e.KeyCode == Keys.Right)
             {
-                game.OnRightKey();
+                platform.MoveRight();
             }
-            if (e.KeyCode == Keys.Left)
+            switch (e.KeyCode)
             {
-                game.OnLeftKey();
+                case (Keys.Right): platform.MoveRight(); break;
+                case (Keys.Left): platform.MoveLeft(); break;
             }
-            
+            Invalidate();
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-
-            game.ProcessFrame();
-            game.DrawFrame(gr);
+            Invalidate();
+            gr.Clear(Color.White);
+            platform.Draw(gr);
+            
+            bullet.Move();
+            bullet.Draw(gr);
+            bullet.CheckBorder();
+            
+            if ((bullet.CheckFault(platform.CheckCollision(ref bullet)))==true)
+            {
+                this.Dispose();
+                MessageBox.Show("ПОТРАЧЕНО");
+            }
+            int index = 0;
+            bool collision = false;
+            foreach (Block b in blocks)
+            {
+                if (b.CheckCollision(ref bullet) == true)
+                {
+                    collision = true;
+                    index = blocks.IndexOf(b);
+                }
+                b.Draw(gr);
+            }
+            try
+            {
+                if (collision == true) blocks.RemoveAt(index);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                this.Dispose();
+                MessageBox.Show("ПОБЕДА");
+            }
             pictureBox1.Image = myBitmap;
 
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            game.DrawFrame(gr);
+            platform.Draw(gr);
+            bullet.Draw(gr);
+            foreach (Block b in blocks)
+            {
+                b.Draw(gr);
+            }
             pictureBox1.Image = myBitmap;
         }
 
         
-       
+
+        private void Form2_Paint(object sender, PaintEventArgs e)
+        {
+
+            
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
 
         
     }

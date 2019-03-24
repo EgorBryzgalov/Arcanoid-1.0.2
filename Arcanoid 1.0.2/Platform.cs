@@ -7,48 +7,50 @@ using System.Drawing;
 
 namespace Arcanoid
 {
-    class Platform : ICollision
+    class Platform
     {//написать методы движения и отрисовки(учесть границы формы)
         public int PosX { get; set; }
         public int PosY { get; private set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        Settings PlatformSettings { get; set; }
+        public int Width { get; set; } = 150;
+        public int Heigh { get; set; } = 20;
         int Speed { get; set; }
 
-        public Platform()
+        public Platform(Settings set)
         {
-
-        }
-        public Platform (int x, int y, int width, int height, int speed)
-        {
-            PosX = x;
-            PosY = y;
-            Width = width;
-            Height = height;
-            Speed = speed;
-
+            PlatformSettings = set;
+            PosY = set.FormHeight - Heigh-3-50;
+            PosX = set.FormWidth / 2 - Width / 2;
+            Width = 150;
+            Heigh = 20;
+            Speed = set.Speed*4;
+            
         }
 
-       
-        public CExtends GetExtends()
-        {
-            CExtends ext = new CExtends(PosX, PosY, Width, Height);
-            return ext;
-        }
         public void MoveRight()
         {
-           PosX += Speed;
+           if (PosX<=PlatformSettings.FormWidth-Width) PosX += Speed;
         }
         public void MoveLeft()
         {
-           PosX -= Speed;
+           if (PosX>=0) PosX -= Speed;
         }
         public void Draw(Graphics Gr)
         {
             SolidBrush brush = new SolidBrush(Color.Blue);
-            Gr.FillRectangle(brush, new Rectangle(PosX, PosY, Width, Height));
+            Gr.FillRectangle(brush, new Rectangle(PosX, PosY, Width, Heigh));
         }
 
-                
+        public bool CheckCollision(ref Bullet bul)
+        {
+            if ((bul.PosX >= PosX-bul.Width) && (bul.PosX <= (PosX + Width)) && (bul.PosY >= (PosY - bul.Heigh)))
+            {
+                bul.SpeedY = -bul.SpeedY;
+                return true;
+            }
+            else return false;
+        }
+
+
     }
 }
