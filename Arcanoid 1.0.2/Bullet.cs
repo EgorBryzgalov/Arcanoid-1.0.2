@@ -62,26 +62,7 @@ namespace Arcanoid
         {
             SpeedY = -SpeedY;
         }
-        public void CheckBorder()
-        {
-            if (PosX >= (BulletSettings.FormWidth-Width))
-            {
-                PosX = BulletSettings.FormWidth - (PosX - BulletSettings.FormWidth);
-                SpeedX = -SpeedX;
-            }
-
-            if (PosX <= 0)
-            {
-                PosX = -PosX;
-                SpeedX = -SpeedX;
-            }
-            if (PosY <= 0)
-            {
-                PosY = -PosY;
-                SpeedY = -SpeedY;
-            }
-
-        }
+        
         public Point GetCenter()
         {
             Point center=new Point();

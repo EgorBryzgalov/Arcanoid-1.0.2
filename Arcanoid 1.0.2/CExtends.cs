@@ -26,7 +26,7 @@ namespace Arcanoid
             BottomY = Y + Heigh;
             Center = new Point(LeftX + (RightX - LeftX) / 2, UpperY + (BottomY - UpperY) / 2);
         }
-        public bool IsIntersected(CExtends one, CExtends two)
+        public static bool IsIntersected(CExtends one, CExtends two)
         {
             if ((one.BottomY >= two.UpperY) && (one.UpperY <= two.BottomY))
             {

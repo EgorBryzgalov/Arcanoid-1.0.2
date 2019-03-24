@@ -72,7 +72,7 @@ namespace Arcanoid
             
             bullet.Move();
             bullet.Draw(gr);
-            bullet.CheckBorder();
+            
             
             if ((bullet.CheckFault(platform.CheckCollision(ref bullet)))==true)
             {
