@@ -16,6 +16,8 @@ namespace Arcanoid
         private int FormWidth { get; set; }
         private int FormHeight { get; set; }
         private bool GameStarted { get; set; }
+        private bool Pause;
+        private bool Following;
     
 
         public Game()
@@ -67,8 +69,20 @@ namespace Arcanoid
         {
             if (CExtends.IsIntersected(bullet.GetExtends(), platform.GetExtends()))
             {
-               if (GameStarted) bullet.InvertYSpeed();
+                if (GameStarted) bullet.InvertYSpeed();
+                if (Pause)
+                {
+                    bullet.Stop();
+                    FollowPlatform();
+                }
             }
+        }
+        public void FollowPlatform()
+        {
+            bullet.PosX = platform.PosX + platform.Width / 2 - bullet.Width / 2;
+            bullet.PosY = platform.PosY - bullet.Height;
+            Following = true;
+
         }
         public bool CheckCollision(Block block)
         {
@@ -155,12 +169,28 @@ namespace Arcanoid
         }
         public void OnSpaceKey()
         {
+            if ((Pause == false) && GameStarted)
+            {
+                Pause = true;
+                
+            }
             if (GameStarted == false)
             {
                 bullet.Start(Speed);
                 bullet.Move();
+                GameStarted = true;
             }
-            GameStarted = true;
+            
+            if (Pause&&Following)
+            {
+                bullet.Start(Speed);
+                bullet.Move();
+                Pause = false;
+                Following = false;
+                
+            }
+            
+
         }
         public void DrawFrame(Graphics gr)
         {

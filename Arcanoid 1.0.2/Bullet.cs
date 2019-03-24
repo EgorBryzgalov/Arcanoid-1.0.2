@@ -47,6 +47,11 @@ namespace Arcanoid
             SpeedX = speed;
             SpeedY = -speed;
         }
+        public void Stop()
+        {
+            SpeedX = 0;
+            SpeedY = 0;
+        }
         public void Move()
         {
             PosX += SpeedX;
