@@ -28,7 +28,7 @@ namespace Arcanoid
             FormWidth = set.FormWidth;
             FormHeight = set.FormHeight;
             Speed = set.Speed;
-            platform = new Platform(set.FormWidth/2-2*set.GetBlockSize(), set.FormHeight-set.GetBlockSize()/2-10, set.GetBlockSize()*4, set.GetBlockSize()/2, Speed*4);
+            platform = new Platform(set.FormWidth/2-2*set.GetBlockSize(), set.FormHeight-set.GetBlockSize()/2-50, set.GetBlockSize()*4, set.GetBlockSize()/2, Speed*4);
             bullet = new Bullet(platform.PosX + platform.Width / 2 - set.GetBlockSize() / 4, platform.PosY - set.GetBlockSize() / 2, set.GetBlockSize() / 2, set.GetBlockSize() / 2);
             blocks = new List<Block>();
             for (int i = 0; i < 3; i++)
@@ -48,7 +48,7 @@ namespace Arcanoid
         {
             CExtends extends = bul.GetExtends();
             
-            if ((extends.LeftX <= 0)||(extends.RightX>=FormWidth)) bullet.InvertXSpeed();
+            if ((extends.LeftX <= 0)||(extends.RightX>=FormWidth-15)) bullet.InvertXSpeed();
             if (extends.UpperY <= 0) bullet.InvertYSpeed();
 
         }

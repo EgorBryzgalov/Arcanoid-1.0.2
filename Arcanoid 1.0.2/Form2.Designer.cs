@@ -36,7 +36,7 @@
             // 
             // timer
             // 
-            this.timer.Interval = 15;
+            this.timer.Interval = 20;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // pictureBox1
