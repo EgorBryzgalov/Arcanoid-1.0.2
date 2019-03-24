@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Arcanoid
 {
-    public class Bullet 
+    public class Bullet : ICollision
     {
         public int PosX { get; set; }
         public int PosY { get; set; }
@@ -17,7 +17,15 @@ namespace Arcanoid
         public bool XSpeedCorrected { get; set; }
         public bool YSpeedCorrected { get; set; }
         public int Width { get; set; }
-        public int Heigh { get; set; }
+        public int Height { get; set; }
+
+        public Bullet(int x, int y, int width, int height)
+        {
+            PosX = x;
+            PosY = y;
+            Width = width;
+            Height = height;
+        }
 
         public Bullet(Settings set)
         {
@@ -25,15 +33,19 @@ namespace Arcanoid
             SpeedY = 0;
             SpeedX = 0;
             Width = set.GetBlockSize() / 2;
-            Heigh = set.GetBlockSize() / 2;
-            PosY = set.FormHeight - 20 - 3 - Heigh-50; ;
+            Height = set.GetBlockSize() / 2;
+            PosY = set.FormHeight - 20 - 3 - Height-50; ;
             PosX = set.FormWidth / 2 - Width/2;
         }
-        
-        public void Start()
+        public CExtends GetExtends()
         {
-            SpeedX = BulletSettings.Speed;
-            SpeedY = -BulletSettings.Speed;
+            CExtends ext = new CExtends(PosX, PosY, Width, Height);
+            return ext;
+        }
+        public void Start(int speed)
+        {
+            SpeedX = speed;
+            SpeedY = -speed;
         }
         public void Move()
         {
@@ -42,43 +54,22 @@ namespace Arcanoid
             XSpeedCorrected = false;
             YSpeedCorrected = false;
         }
-        public void CheckBorder()
+        public void InvertXSpeed()
         {
-            if (PosX >= (BulletSettings.FormWidth-Width))
-            {
-                PosX = BulletSettings.FormWidth - (PosX - BulletSettings.FormWidth);
-                SpeedX = -SpeedX;
-            }
-
-            if (PosX <= 0)
-            {
-                PosX = -PosX;
-                SpeedX = -SpeedX;
-            }
-            if (PosY <= 0)
-            {
-                PosY = -PosY;
-                SpeedY = -SpeedY;
-            }
-
+            SpeedX = -SpeedX;
         }
-        public Point GetCenter()
+        public void InvertYSpeed()
         {
-            Point center=new Point();
-            center.X = PosX + BulletSettings.GetBlockSize()/4;
-            center.Y = PosY + BulletSettings.GetBlockSize()/4;
-            return center;
+            SpeedY = -SpeedY;
         }
+        
+        
         public void Draw(Graphics Gr)
         {
             SolidBrush brush = new SolidBrush(Color.Blue);
-            Gr.FillRectangle(brush, new Rectangle(this.PosX, this.PosY, BulletSettings.GetBlockSize()/2, BulletSettings.GetBlockSize()/2));
+            Gr.FillRectangle(brush, new Rectangle(this.PosX, this.PosY, Width, Height));
         }
-        public bool CheckFault(bool platform)
-        {
-            if ((PosY>=BulletSettings.FormHeight-Heigh)&&(platform == false)) { return true; }
-            else { return false; }
-        }
+        
 
     }
 
