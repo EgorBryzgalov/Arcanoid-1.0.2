@@ -14,11 +14,11 @@ namespace Arcanoid
     {
         public MainForm()
         {
-            InitializeComponent();                          
+            InitializeComponent();
+            EasyRadioButton.Checked = true;
         }
 
         private int speed;
-        bool LevelChosen = false;
 
         private Settings GetSettings()
         {
@@ -28,35 +28,36 @@ namespace Arcanoid
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            if (LevelChosen == true)
-            {
+            
                 Form2 GameForm = new Form2(GetSettings());
                 GameForm.ShowDialog(this);
-            }
-            else { MessageBox.Show("Выберите уровень сложности!"); }
+            
         }
-
-        private void OnMidMode(object sender, EventArgs e)
-        {
-            LevelChosen = true;
-            speed = 5;
-        }
-
-        private void OnHardMode(object sender, EventArgs e)
-        {
-            LevelChosen = true;
-            speed = 7;
-        }
-
-        private void OnEasyMode(object sender, EventArgs e)
-        {
-            LevelChosen = true;
-            speed = 3;
-        }
-
+                
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+        private void OnLevelChanged(object sender, EventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+           if (radioButton.Checked)
+            {
+                switch (radioButton.Text)
+                {
+                    case "Легко":
+                        speed = 3;
+                        break;
+                    case "Средне":
+                        speed = 5;
+                        break;
+                    case "Сложно":
+                        speed = 7;
+                        break;
+                }
+            }
+        }
+
     }
 }
