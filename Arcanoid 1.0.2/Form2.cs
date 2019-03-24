@@ -19,7 +19,7 @@ namespace Arcanoid
         Bitmap myBitmap;
         Graphics gr;
         Game game;
-
+        
 
         public Form2(Settings settings)
         {
@@ -27,15 +27,25 @@ namespace Arcanoid
             game = new Game(settings);
             this.Width = settings.FormWidth;
             this.Height = settings.FormHeight;
+            
             pictureBox1.Width = this.Width;
             pictureBox1.Height = this.Height;
             myBitmap = new Bitmap(Width, Height);
             gr = Graphics.FromImage(myBitmap);
-            
-
-
+            game.Win += WinGame;
+            game.Lose += LoseGame;
         }
-        
+
+        private void LoseGame()
+        {
+            this.Dispose();
+            MessageBox.Show("Потрачено!");
+        }
+        private void WinGame()
+        {
+            this.Dispose();
+            MessageBox.Show("ПОБЕДА");
+        }
         
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
@@ -57,15 +67,16 @@ namespace Arcanoid
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            
-            
+
+            game.ProcessFrame();
+            game.DrawFrame(gr);
             pictureBox1.Image = myBitmap;
 
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            
+            game.DrawFrame(gr);
             pictureBox1.Image = myBitmap;
         }
 

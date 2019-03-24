@@ -28,8 +28,9 @@ namespace Arcanoid
             FormWidth = set.FormWidth;
             FormHeight = set.FormHeight;
             Speed = set.Speed;
-            platform = new Platform(set.FormWidth/2-2*set.GetBlockSize(), set.FormHeight-set.GetBlockSize()/2-3, set.GetBlockSize()*4, set.GetBlockSize()/2);
-            bullet = new Bullet(platform.PosX + platform.Width / 2 - set.GetBlockSize() / 4, platform.PosY + set.GetBlockSize() / 2, set.GetBlockSize() / 2, set.GetBlockSize() / 2);
+            platform = new Platform(set.FormWidth/2-2*set.GetBlockSize(), set.FormHeight-set.GetBlockSize()/2-10, set.GetBlockSize()*4, set.GetBlockSize()/2, Speed*4);
+            bullet = new Bullet(platform.PosX + platform.Width / 2 - set.GetBlockSize() / 4, platform.PosY - set.GetBlockSize() / 2, set.GetBlockSize() / 2, set.GetBlockSize() / 2);
+            blocks = new List<Block>();
             for (int i = 0; i < 3; i++)
             {
                 for (int m = 0; m < set.GetBlocksRow(); m++)
@@ -51,26 +52,22 @@ namespace Arcanoid
             if (extends.UpperY <= 0) bullet.InvertYSpeed();
 
         }
-        public bool CheckBorder(Platform plt)
-        {
-            CExtends extends = plt.GetExtends();
-
-            if ((extends.LeftX <= 0) || (extends.RightX >= FormWidth)) return true;
-            else return false;
-            
-            
-        }
+        
         public bool CheckFault ()
         {
             CExtends extends = bullet.GetExtends();
-            if (extends.UpperY >= FormHeight) return true;
-                else return false;
+            if (extends.UpperY >= FormHeight)
+            {
+                Lose();
+                return true;
+            }
+            else return false;
         }
         public void CheckPlatfrom()
         {
             if (CExtends.IsIntersected(bullet.GetExtends(), platform.GetExtends()))
             {
-                bullet.InvertYSpeed();
+               if (GameStarted) bullet.InvertYSpeed();
             }
         }
         public bool CheckCollision(Block block)
@@ -116,41 +113,50 @@ namespace Arcanoid
         }
         public delegate void Container();
         public event Container Win;
+        public event Container Lose;
         public void ProcessFrame()
         {
             CheckBorder(bullet);
             CheckFault();
             CheckPlatfrom();
+            bullet.Move();
+            int index=0;
+            bool allowdelete = false;
             foreach (Block b in blocks)
             {
-                int index = 0;
+                                
                 if (CheckCollision(b))
                 {
-                    try
-                    {
-                        blocks.RemoveAt(blocks.IndexOf(b));
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        Win();
-                    }
-                    
-                    
+                    index = blocks.IndexOf(b);
+                    allowdelete = true;                                     
                 }
-                
+            }
+            try
+            {
+               if (allowdelete) blocks.RemoveAt(index);
+                allowdelete = false;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Win();
             }
         }
         public void OnRightKey()
         {
-            if (CheckBorder(platform)==false) { platform.MoveRight(); }
+            if (platform.GetExtends().RightX <= FormWidth) { platform.MoveRight(); }
         }
         public void OnLeftKey()
         {
-            if (CheckBorder(platform)==false) { platform.MoveLeft(); }
+            if (platform.GetExtends().LeftX>=0) { platform.MoveLeft(); }
         }
         public void OnSpaceKey()
         {
-            if (GameStarted == false) bullet.Start(Speed);
+            if (GameStarted == false)
+            {
+                bullet.Start(Speed);
+                bullet.Move();
+            }
+            GameStarted = true;
         }
         public void DrawFrame(Graphics gr)
         {

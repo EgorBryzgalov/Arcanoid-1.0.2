@@ -73,13 +73,9 @@ namespace Arcanoid
         public void Draw(Graphics Gr)
         {
             SolidBrush brush = new SolidBrush(Color.Blue);
-            Gr.FillRectangle(brush, new Rectangle(this.PosX, this.PosY, BulletSettings.GetBlockSize()/2, BulletSettings.GetBlockSize()/2));
+            Gr.FillRectangle(brush, new Rectangle(this.PosX, this.PosY, Width, Height));
         }
-        public bool CheckFault(bool platform)
-        {
-            if ((PosY>=BulletSettings.FormHeight-Height)&&(platform == false)) { return true; }
-            else { return false; }
-        }
+        
 
     }
 

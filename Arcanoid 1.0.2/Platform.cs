@@ -11,7 +11,6 @@ namespace Arcanoid
     {//написать методы движения и отрисовки(учесть границы формы)
         public int PosX { get; set; }
         public int PosY { get; private set; }
-        Settings PlatformSettings { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         int Speed { get; set; }
@@ -20,26 +19,17 @@ namespace Arcanoid
         {
 
         }
-        public Platform (int x, int y, int width, int height)
+        public Platform (int x, int y, int width, int height, int speed)
         {
             PosX = x;
             PosY = y;
             Width = width;
             Height = height;
+            Speed = speed;
 
         }
 
-        public Platform(Settings set)
-        {
-            PlatformSettings = set;
-            PosY = set.FormHeight - Height-3-50;
-            PosX = set.FormWidth / 2 - Width / 2;
-            Width = 150;
-            Height = 20;
-            Speed = set.Speed*4;
-            
-        }
-
+       
         public CExtends GetExtends()
         {
             CExtends ext = new CExtends(PosX, PosY, Width, Height);
@@ -47,11 +37,11 @@ namespace Arcanoid
         }
         public void MoveRight()
         {
-           if (PosX<=PlatformSettings.FormWidth-Width) PosX += Speed;
+           PosX += Speed;
         }
         public void MoveLeft()
         {
-           if (PosX>=0) PosX -= Speed;
+           PosX -= Speed;
         }
         public void Draw(Graphics Gr)
         {
