@@ -8,10 +8,12 @@ using System.Drawing;
 
 namespace Arcanoid
 {
-    public class Block
+    public class Block : ICollision
     {   
         public int PosX { get; set; }
         public int PosY { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         Settings BlockSettings { get; set; }
 
         public Block()
@@ -19,11 +21,17 @@ namespace Arcanoid
 
             }
       
-        public Block(int x, int y, Settings set)
+        public Block(int x, int y, int width, int height)
         {
             PosX = x;
             PosY = y;
-            BlockSettings = set;
+            Width = width;
+            Height = height;
+        }
+        public CExtends GetExtends()
+        {
+            CExtends ext = new CExtends(PosX, PosY, Width, Height);
+            return ext;
         }
 
         public void Draw(Graphics Gr)

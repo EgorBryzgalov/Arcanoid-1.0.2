@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace Arcanoid_1._0._2
+namespace Arcanoid
 {
-    class CExtends
+    public class CExtends
     {// описывает размеры графического объекта и определяет столкновения
         public int LeftX { get; set; }
         public int RightX { get; set; }

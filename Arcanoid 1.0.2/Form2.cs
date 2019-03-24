@@ -31,18 +31,7 @@ namespace Arcanoid
             this.Height = settings.FormHeight;
             GameSettings = settings;
             
-            for (int i = 0; i < 3; i++)
-            {
-                for (int m = 0; m < GameSettings.GetBlocksRow(); m++)
-                {
-                    
-                    int index = i * GameSettings.GetBlocksRow() + m;
-                    int X = 3 + m * (GameSettings.GetBlockSize() + 3);
-                    int Y = 3 + i * (GameSettings.GetBlockSize() + 3);
-                    blocks.Add(new Block(X,Y, settings));
-                    
-                }
-            }
+           
             platform = new Platform(settings);
             bullet = new Bullet(settings);
             pictureBox1.Width = this.Width-10;

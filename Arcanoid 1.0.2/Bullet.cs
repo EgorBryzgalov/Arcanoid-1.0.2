@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Arcanoid
 {
-    public class Bullet 
+    public class Bullet : ICollision
     {
         public int PosX { get; set; }
         public int PosY { get; set; }
@@ -17,7 +17,15 @@ namespace Arcanoid
         public bool XSpeedCorrected { get; set; }
         public bool YSpeedCorrected { get; set; }
         public int Width { get; set; }
-        public int Heigh { get; set; }
+        public int Height { get; set; }
+
+        public Bullet(int x, int y, int width, int height)
+        {
+            PosX = x;
+            PosY = y;
+            Width = width;
+            Height = height;
+        }
 
         public Bullet(Settings set)
         {
@@ -25,11 +33,15 @@ namespace Arcanoid
             SpeedY = 0;
             SpeedX = 0;
             Width = set.GetBlockSize() / 2;
-            Heigh = set.GetBlockSize() / 2;
-            PosY = set.FormHeight - 20 - 3 - Heigh-50; ;
+            Height = set.GetBlockSize() / 2;
+            PosY = set.FormHeight - 20 - 3 - Height-50; ;
             PosX = set.FormWidth / 2 - Width/2;
         }
-        
+        public CExtends GetExtends()
+        {
+            CExtends ext = new CExtends(PosX, PosY, Width, Height);
+            return ext;
+        }
         public void Start()
         {
             SpeedX = BulletSettings.Speed;
@@ -76,7 +88,7 @@ namespace Arcanoid
         }
         public bool CheckFault(bool platform)
         {
-            if ((PosY>=BulletSettings.FormHeight-Heigh)&&(platform == false)) { return true; }
+            if ((PosY>=BulletSettings.FormHeight-Height)&&(platform == false)) { return true; }
             else { return false; }
         }
 

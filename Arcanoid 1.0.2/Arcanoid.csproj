@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3371507F-7092-4A16-B1FA-CF637DE8A0A7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Arcanoid_1._0._2</RootNamespace>
-    <AssemblyName>Arcanoid 1.0.2</AssemblyName>
+    <RootNamespace>Arcanoid</RootNamespace>
+    <AssemblyName>Arcanoid</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -110,6 +110,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Arcanoid 1.0.2_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
