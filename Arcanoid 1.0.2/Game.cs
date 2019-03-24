@@ -131,15 +131,19 @@ namespace Arcanoid
                     allowdelete = true;                                     
                 }
             }
-            try
+
+            if (allowdelete)
             {
-               if (allowdelete) blocks.RemoveAt(index);
-                allowdelete = false;
+                if (blocks.Count > 1) blocks.RemoveAt(index);
+                if (blocks.Count == 1)
+                {
+                    Win();
+                }
             }
-            catch (IndexOutOfRangeException)
-            {
-                Win();
-            }
+
+            allowdelete = false;
+            
+            
         }
         public void OnRightKey()
         {
