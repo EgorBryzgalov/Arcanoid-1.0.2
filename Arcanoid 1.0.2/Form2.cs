@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Arcanoid_1._0._2
+namespace Arcanoid
 {
     public partial class Form2 : Form
     {

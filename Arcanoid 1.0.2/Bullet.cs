@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace Arcanoid_1._0._2
+namespace Arcanoid
 {
     public class Bullet 
     {

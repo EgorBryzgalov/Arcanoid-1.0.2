@@ -1,4 +1,4 @@
-﻿namespace Arcanoid_1._0._2
+﻿namespace Arcanoid
 {
     partial class MainForm
     {
@@ -35,6 +35,7 @@
             this.среднеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сложноToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitButton = new System.Windows.Forms.Button();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,11 +101,23 @@
             this.ExitButton.UseVisualStyleBackColor = true;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(60, 304);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(110, 21);
+            this.radioButton1.TabIndex = 3;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "radioButton1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(299, 428);
+            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(this.menuStrip1);
@@ -127,6 +140,7 @@
         private System.Windows.Forms.ToolStripMenuItem среднеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem сложноToolStripMenuItem;
         private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }
 

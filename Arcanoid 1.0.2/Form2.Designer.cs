@@ -1,4 +1,4 @@
-﻿namespace Arcanoid_1._0._2
+﻿namespace Arcanoid
 {
     partial class Form2
     {

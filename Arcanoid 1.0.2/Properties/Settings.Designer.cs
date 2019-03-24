@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Arcanoid_1._0._2.Properties
+namespace Arcanoid.Properties
 {
 
 
