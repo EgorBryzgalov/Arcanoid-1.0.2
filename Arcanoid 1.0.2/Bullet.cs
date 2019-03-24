@@ -63,13 +63,7 @@ namespace Arcanoid
             SpeedY = -SpeedY;
         }
         
-        public Point GetCenter()
-        {
-            Point center=new Point();
-            center.X = PosX + BulletSettings.GetBlockSize()/4;
-            center.Y = PosY + BulletSettings.GetBlockSize()/4;
-            return center;
-        }
+        
         public void Draw(Graphics Gr)
         {
             SolidBrush brush = new SolidBrush(Color.Blue);

@@ -49,16 +49,6 @@ namespace Arcanoid
             Gr.FillRectangle(brush, new Rectangle(PosX, PosY, Width, Height));
         }
 
-        public bool CheckCollision(ref Bullet bul)
-        {
-            if ((bul.PosX >= PosX-bul.Width) && (bul.PosX <= (PosX + Width)) && (bul.PosY >= (PosY - bul.Height)))
-            {
-                bul.SpeedY = -bul.SpeedY;
-                return true;
-            }
-            else return false;
-        }
-
-        
+                
     }
 }
