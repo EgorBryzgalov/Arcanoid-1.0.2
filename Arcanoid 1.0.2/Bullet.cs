@@ -42,10 +42,10 @@ namespace Arcanoid
             CExtends ext = new CExtends(PosX, PosY, Width, Height);
             return ext;
         }
-        public void Start()
+        public void Start(int speed)
         {
-            SpeedX = BulletSettings.Speed;
-            SpeedY = -BulletSettings.Speed;
+            SpeedX = speed;
+            SpeedY = -speed;
         }
         public void Move()
         {
@@ -53,6 +53,14 @@ namespace Arcanoid
             PosY += SpeedY;
             XSpeedCorrected = false;
             YSpeedCorrected = false;
+        }
+        public void InvertXSpeed()
+        {
+            SpeedX = -SpeedX;
+        }
+        public void InvertYSpeed()
+        {
+            SpeedY = -SpeedY;
         }
         public void CheckBorder()
         {

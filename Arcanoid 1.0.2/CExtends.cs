@@ -13,7 +13,7 @@ namespace Arcanoid
         public int RightX { get; set; }
         public int UpperY { get; set; }
         public int BottomY { get; set; }
-
+        public Point Center { get; set; }
         public CExtends()
         {
 
@@ -24,6 +24,18 @@ namespace Arcanoid
             UpperY = Y;
             RightX = X + Width;
             BottomY = Y + Heigh;
+            Center = new Point(LeftX + (RightX - LeftX) / 2, UpperY + (BottomY - UpperY) / 2);
+        }
+        public bool IsIntersected(CExtends one, CExtends two)
+        {
+            if ((one.BottomY >= two.UpperY) && (one.UpperY <= two.BottomY))
+            {
+                if ((one.RightX >= two.LeftX) && (one.LeftX <= two.RightX)) return true;
+                else return false;
+            }
+            else return false;
+
+
         }
         
     }
