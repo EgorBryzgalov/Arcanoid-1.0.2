@@ -73,9 +73,9 @@ namespace Arcanoid
                 bullet.InvertYSpeed();
             }
         }
-        public void CheckCollision(Block block)
+        public bool CheckCollision(Block block)
         {
-            
+
             if (CExtends.IsIntersected(block.GetExtends(), bullet.GetExtends()))
             {
                 CExtends BlockExtends = block.GetExtends();
@@ -109,11 +109,13 @@ namespace Arcanoid
                 {
                     bullet.InvertYSpeed();
                 }
-                
+                return true;
             }
+            else return false;
             
         }
-
+        public delegate void Container();
+        public event Container Win;
         public void ProcessFrame()
         {
             CheckBorder(bullet);
@@ -121,7 +123,21 @@ namespace Arcanoid
             CheckPlatfrom();
             foreach (Block b in blocks)
             {
-                CheckCollision(b);
+                int index = 0;
+                if (CheckCollision(b))
+                {
+                    try
+                    {
+                        blocks.RemoveAt(blocks.IndexOf(b));
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        Win();
+                    }
+                    
+                    
+                }
+                
             }
         }
         public void OnRightKey()
@@ -138,6 +154,7 @@ namespace Arcanoid
         }
         public void DrawFrame(Graphics gr)
         {
+            gr.Clear(Color.White);
             foreach (Block b in blocks)
             {
                 b.Draw(gr);

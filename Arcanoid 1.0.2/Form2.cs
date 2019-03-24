@@ -18,115 +18,59 @@ namespace Arcanoid
         }
         Bitmap myBitmap;
         Graphics gr;
-        Platform platform;
-        Bullet bullet;
+        Game game;
 
-        Settings GameSettings;
-        List<Block> blocks = new List<Block>();
 
         public Form2(Settings settings)
         {
             InitializeComponent();
+            game = new Game(settings);
             this.Width = settings.FormWidth;
             this.Height = settings.FormHeight;
-            GameSettings = settings;
-            
-           
-            platform = new Platform(settings);
-            bullet = new Bullet(settings);
-            pictureBox1.Width = this.Width-10;
-            pictureBox1.Height = this.Height-30;
+            pictureBox1.Width = this.Width;
+            pictureBox1.Height = this.Height;
             myBitmap = new Bitmap(Width, Height);
             gr = Graphics.FromImage(myBitmap);
             
 
 
         }
-        bool GameStarted = false;
+        
         
         private void Form2_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Space)&&(GameStarted==false))
+            if (e.KeyCode == Keys.Space)
             {
                 timer.Enabled = true;
-                GameStarted = true;
-                bullet.Start();
+                game.OnSpaceKey();
             }
             if (e.KeyCode == Keys.Right)
             {
-                platform.MoveRight();
+                game.OnRightKey();
             }
-            switch (e.KeyCode)
+            if (e.KeyCode == Keys.Left)
             {
-                case (Keys.Right): platform.MoveRight(); break;
-                case (Keys.Left): platform.MoveLeft(); break;
+                game.OnLeftKey();
             }
-            Invalidate();
+            
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            Invalidate();
-            gr.Clear(Color.White);
-            platform.Draw(gr);
-            
-            bullet.Move();
-            bullet.Draw(gr);
             
             
-            if ((bullet.CheckFault(platform.CheckCollision(ref bullet)))==true)
-            {
-                this.Dispose();
-                MessageBox.Show("ПОТРАЧЕНО");
-            }
-            int index = 0;
-            bool collision = false;
-            foreach (Block b in blocks)
-            {
-                if (b.CheckCollision(ref bullet) == true)
-                {
-                    collision = true;
-                    index = blocks.IndexOf(b);
-                }
-                b.Draw(gr);
-            }
-            try
-            {
-                if (collision == true) blocks.RemoveAt(index);
-            }
-            catch (IndexOutOfRangeException)
-            {
-                this.Dispose();
-                MessageBox.Show("ПОБЕДА");
-            }
             pictureBox1.Image = myBitmap;
 
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            platform.Draw(gr);
-            bullet.Draw(gr);
-            foreach (Block b in blocks)
-            {
-                b.Draw(gr);
-            }
+            
             pictureBox1.Image = myBitmap;
         }
 
         
-
-        private void Form2_Paint(object sender, PaintEventArgs e)
-        {
-
-            
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         
     }
