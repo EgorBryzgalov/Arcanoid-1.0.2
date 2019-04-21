@@ -9,12 +9,30 @@ using System.Drawing;
 namespace Arcanoid
 {
     public class Block : ICollision
-    {   
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+    {   public Point Position {get; set;}
+        private int health;
+        public int Health 
+        {
+            get 
+            {
+                return health;
+            }
+            set
+            {
+                if (value<0) 
+                    health = 0;
+                else 
+                    health = value;
+            }
+        }
+
         public int Width { get; set; }
         public int Height { get; set; }
         
+        public void GetHit()
+        {
+            Health-=1;
+        }
 
         public Block()
             {
@@ -23,21 +41,20 @@ namespace Arcanoid
       
         public Block(int x, int y, int width, int height)
         {
-            PosX = x;
-            PosY = y;
+            Position = new Point (x, y);
             Width = width;
             Height = height;
         }
         public CExtends GetExtends()
         {
-            CExtends ext = new CExtends(PosX, PosY, Width, Height);
+            CExtends ext = new CExtends(Position.X, Position.Y, Width, Height);
             return ext;
         }
 
-        public void Draw(Graphics Gr)
+        public virtual void Draw(Graphics Gr)
         {
             SolidBrush brush = new SolidBrush(Color.Black);
-            Gr.FillRectangle(brush, new Rectangle(PosX, PosY, Width, Height));
+            Gr.FillRectangle(brush, new Rectangle(Position.X, Position.Y, Width, Height));
         }
         
                

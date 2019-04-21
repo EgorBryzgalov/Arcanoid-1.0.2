@@ -41,7 +41,7 @@ namespace Arcanoid
                     int index = i * set.GetBlocksRow() + m;
                     int X = 3 + m * (set.GetBlockSize() + 3);
                     int Y = 3 + i * (set.GetBlockSize() + 3);
-                    blocks.Add(new Block(X, Y, set.GetBlockSize(), set.GetBlockSize()));
+                    blocks.Add(new WoodBlock(X, Y, set.GetBlockSize(), set.GetBlockSize()));
 
                 }
             }
