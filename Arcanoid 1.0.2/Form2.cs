@@ -80,9 +80,9 @@ namespace Arcanoid
             pictureBox1.Image = myBitmap;
         }
 
-        
-       
-
-        
+        private void Form2_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
     }
 }

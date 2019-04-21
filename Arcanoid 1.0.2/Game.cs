@@ -18,6 +18,7 @@ namespace Arcanoid
         private bool GameStarted { get; set; }
         private bool Pause;
         private bool Following;
+
     
 
         public Game()
