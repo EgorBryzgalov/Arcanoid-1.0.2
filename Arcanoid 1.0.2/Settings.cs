@@ -12,6 +12,7 @@ namespace Arcanoid
         public int BlocksQuantity { get; set; }
         public int FormWidth { get; set; }
         public int FormHeight { get; set; }
+        
 
         public Settings()
         {

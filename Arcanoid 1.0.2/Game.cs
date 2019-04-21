@@ -33,6 +33,7 @@ namespace Arcanoid
             platform = new Platform(set.FormWidth/2-2*set.GetBlockSize(), set.FormHeight-set.GetBlockSize()/2-50, set.GetBlockSize()*4, set.GetBlockSize()/2, Speed*4);
             bullet = new Bullet(platform.PosX + platform.Width / 2 - set.GetBlockSize() / 4, platform.PosY - set.GetBlockSize() / 2, set.GetBlockSize() / 2, set.GetBlockSize() / 2);
             blocks = new List<Block>();
+            Random rnd = new Random();
             for (int i = 0; i < 3; i++)
             {
                 for (int m = 0; m < set.GetBlocksRow(); m++)
@@ -41,7 +42,12 @@ namespace Arcanoid
                     int index = i * set.GetBlocksRow() + m;
                     int X = 3 + m * (set.GetBlockSize() + 3);
                     int Y = 3 + i * (set.GetBlockSize() + 3);
-                    blocks.Add(new WoodBlock(X, Y, set.GetBlockSize(), set.GetBlockSize()));
+                    
+                    int RandomNumber = rnd.Next(0, 100);
+                    if ((RandomNumber>=0)&&(RandomNumber<=20))
+                        blocks.Add(new MetalBlock(X, Y, set.GetBlockSize(), set.GetBlockSize()));
+                    else
+                        blocks.Add(new WoodBlock(X, Y, set.GetBlockSize(), set.GetBlockSize()));
 
                 }
             }
@@ -141,8 +147,9 @@ namespace Arcanoid
                                 
                 if (CheckCollision(b))
                 {
+                    b.GetHit();
                     index = blocks.IndexOf(b);
-                    allowdelete = true;                                     
+                   if (b.Health == 0) allowdelete = true;                                     
                 }
             }
 

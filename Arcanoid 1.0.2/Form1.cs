@@ -19,6 +19,7 @@ namespace Arcanoid
         }
 
         private int speed;
+        
 
         private Settings GetSettings()
         {

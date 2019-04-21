@@ -140,5 +140,17 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MetalTexture.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WoodTexture.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Metal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Wood.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,7 +16,10 @@ namespace Arcanoid
         public override void Draw(Graphics Gr)
         {
             SolidBrush brush = new SolidBrush(Color.Brown);
-            Gr.FillRectangle(brush, new Rectangle(Position.X, Position.Y, Width, Height));
+            Image image = Properties.Resources.Wood;
+            Rectangle rect = new Rectangle(Position.X, Position.Y, Width, Height);
+            Gr.DrawImage(image, rect);
+           
         }
     }
 }
